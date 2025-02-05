@@ -3,6 +3,8 @@
 *.bck
 *.save
 *.autosave
+\#auto_saved_files\#
+
 
 # KiCad PCB and schematic backup files
 *.kicad_pcb-bak
