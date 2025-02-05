@@ -1,0 +1,52 @@
+# Backup and autosave files
+*.bak
+*.bck
+*.save
+*.autosave
+
+# KiCad PCB and schematic backup files
+*.kicad_pcb-bak
+*.kicad_sch-bak
+
+# Simulation and cache files
+*-cache.lib
+*-rescue.*
+*.net
+*.xml
+*.spice
+*.raw
+*.log
+
+# Gerber and fabrication outputs
+*.gbr
+*.drl
+*.gbl
+*.gbo
+*.gbp
+*.gbn
+*.gts
+*.gto
+*.gtp
+*.gtn
+*.gbs
+*.gko
+*.gm1
+*.map
+
+# Output files from KiCad
+*.pos
+*.rpt
+*.csv
+*.zip
+*.pdf
+*.step
+*.stp
+*.dxf
+*.bdr
+*.svg
+
+# KiCad user settings and temporary files
+*.kicad_wks
+*.history
+*.lock
+
