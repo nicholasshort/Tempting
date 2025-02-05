@@ -49,6 +49,7 @@
 
 # KiCad user settings and temporary files
 *.kicad_wks
+*.kicad_prl
 *.history
 *.lock
 
