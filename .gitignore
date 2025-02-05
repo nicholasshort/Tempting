@@ -50,3 +50,6 @@
 *.history
 *.lock
 
+# Mac files
+.DS_Store
+
