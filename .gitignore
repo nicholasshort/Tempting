@@ -54,6 +54,11 @@
 *.history
 *.lock
 
+# Ignore library cache files
+fp-info-cache
+sym-lib-table
+fp-lib-table
+
 # Mac files
 .DS_Store
 
