@@ -4,6 +4,12 @@
 	(generator_version "8.0")
 	(uuid "ab8ca498-9b4e-4601-9f1d-f64c320ae8c6")
 	(paper "A4")
+	(title_block
+		(title "Tempting")
+		(date "2025-02-06")
+		(rev "V1")
+		(company "Tempting Services")
+	)
 	(lib_symbols
 		(symbol "Connector:Conn_ARM_SWD_TagConnect_TC2030"
 			(exclude_from_sim no)
@@ -3497,6 +3503,142 @@
 				)
 			)
 		)
+		(symbol "Regulator_Linear:AMS1117-3.3"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -3.81 3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "AMS1117-3.3"
+				(at 0 3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "http://www.advanced-monolithic.com/pdf/ds1117.pdf"
+				(at 2.54 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "1A Low Dropout regulator, positive, 3.3V fixed output, SOT-223"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "linear regulator ldo fixed positive"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SOT?223*TabPin2*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "AMS1117-3.3_0_1"
+				(rectangle
+					(start -5.08 -5.08)
+					(end 5.08 1.905)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "AMS1117-3.3_1_1"
+				(pin power_in line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "VO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -7.62 0 0)
+					(length 2.54)
+					(name "VI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Sensor_Gas:SCD41-D-R2"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -4251,10 +4393,22 @@
 		(uuid "3ac7c263-6dc4-4c5e-aa83-e98e4d33307d")
 	)
 	(junction
+		(at 68.326 162.814)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3e3043aa-b694-4ece-898d-d8ea6e710aa9")
+	)
+	(junction
 		(at 53.34 97.536)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "42a027da-ded2-4f0a-a632-d9ec4a476a25")
+	)
+	(junction
+		(at 37.592 162.814)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "58a9ed2e-c5e9-4b19-9076-f45466316ba7")
 	)
 	(junction
 		(at 110.49 41.656)
@@ -4458,6 +4612,16 @@
 	)
 	(wire
 		(pts
+			(xy 37.592 172.72) (xy 37.592 174.752)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0717536b-5582-461e-94fc-2fc03dc5bf66")
+	)
+	(wire
+		(pts
 			(xy 152.654 137.16) (xy 152.654 138.176)
 		)
 		(stroke
@@ -4598,6 +4762,36 @@
 	)
 	(wire
 		(pts
+			(xy 60.452 162.814) (xy 68.326 162.814)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b749002-4448-4386-98bc-7570b6f7e00d")
+	)
+	(wire
+		(pts
+			(xy 68.326 162.814) (xy 68.326 164.338)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b9549ba-0eaa-42aa-9f7c-146eb8c12d5e")
+	)
+	(wire
+		(pts
+			(xy 68.326 159.512) (xy 68.326 162.814)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1c83a1bd-ed5c-4e17-9283-ec0bcd1642d7")
+	)
+	(wire
+		(pts
 			(xy 162.814 58.42) (xy 162.814 56.896)
 		)
 		(stroke
@@ -4645,6 +4839,16 @@
 			(type default)
 		)
 		(uuid "225287f5-d1db-4af3-b5f1-cd3aa99e95b5")
+	)
+	(wire
+		(pts
+			(xy 68.326 171.958) (xy 68.326 174.498)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "239bccbb-10e1-4fd2-84f1-aa7f291d3fd4")
 	)
 	(wire
 		(pts
@@ -5398,6 +5602,16 @@
 	)
 	(wire
 		(pts
+			(xy 37.592 159.004) (xy 37.592 162.814)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "adcb2de8-181b-46b1-bf44-af36cc55721f")
+	)
+	(wire
+		(pts
 			(xy 147.574 56.896) (xy 145.034 56.896)
 		)
 		(stroke
@@ -5468,6 +5682,16 @@
 	)
 	(wire
 		(pts
+			(xy 37.592 162.814) (xy 37.592 165.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bc47ff85-e0c4-4710-a870-40b415e80caa")
+	)
+	(wire
+		(pts
 			(xy 228.854 40.386) (xy 228.854 42.926)
 		)
 		(stroke
@@ -5505,6 +5729,16 @@
 			(type default)
 		)
 		(uuid "c0eefa7c-6afd-4a22-99be-05a981b145d8")
+	)
+	(wire
+		(pts
+			(xy 52.832 170.434) (xy 52.832 174.498)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c64fa377-e561-4022-89aa-350fa46ed435")
 	)
 	(wire
 		(pts
@@ -5745,6 +5979,16 @@
 			(type default)
 		)
 		(uuid "e7f38f37-a89a-413a-a930-dbbd58977adb")
+	)
+	(wire
+		(pts
+			(xy 37.592 162.814) (xy 45.212 162.814)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e9e8b116-b077-4288-b655-ff430bb09ae6")
 	)
 	(wire
 		(pts
@@ -6480,6 +6724,72 @@
 	)
 	(symbol
 		(lib_id "power:GND")
+		(at 68.326 174.498 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "11f82456-72b4-4364-aa74-fcdf0c57f738")
+		(property "Reference" "#PWR0124"
+			(at 68.326 180.848 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 68.326 179.832 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 68.326 174.498 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 68.326 174.498 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 68.326 174.498 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "160cba44-d65d-4f90-96c5-c7f973ad0eb1")
+		)
+		(instances
+			(project "Tempting"
+				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
+					(reference "#PWR0124")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
 		(at 36.068 93.218 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6538,6 +6848,76 @@
 			(project "Tempting"
 				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
 					(reference "#PWR0113")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 37.592 168.91 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "214284b9-41d6-4d37-87b8-6b2bc498267b")
+		(property "Reference" "C115"
+			(at 40.64 167.6399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10u"
+			(at 40.64 170.1799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 38.5572 172.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 37.592 168.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 37.592 168.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "bb5d38aa-43e8-423b-a257-cca0224b364a")
+		)
+		(pin "2"
+			(uuid "e22b45c2-148f-405c-8588-627028035b58")
+		)
+		(instances
+			(project ""
+				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
+					(reference "C115")
 					(unit 1)
 				)
 			)
@@ -7004,6 +7384,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3.3V")
+		(at 68.326 159.512 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4dda2733-934d-46b5-be86-694cc7a316a3")
+		(property "Reference" "#PWR0125"
+			(at 68.326 163.322 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 68.326 154.178 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 68.326 159.512 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 68.326 159.512 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 68.326 159.512 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6cec67bc-d442-4022-99da-7c9552addcfd")
+		)
+		(instances
+			(project "Tempting"
+				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
+					(reference "#PWR0125")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Sensor_Gas:SCD41-D-R2")
 		(at 110.998 179.832 0)
 		(unit 1)
@@ -7352,6 +7798,72 @@
 			(project "Tempting"
 				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
 					(reference "C106")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VBUS")
+		(at 37.592 159.004 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "86603d44-d79c-43b5-bce3-732576a21518")
+		(property "Reference" "#PWR0122"
+			(at 37.592 162.814 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VBUS"
+			(at 37.592 154.686 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 37.592 159.004 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 37.592 159.004 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VBUS\""
+			(at 37.592 159.004 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c0fc531d-4044-4275-b39e-0d5665ad360a")
+		)
+		(instances
+			(project "Tempting"
+				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
+					(reference "#PWR0122")
 					(unit 1)
 				)
 			)
@@ -8119,6 +8631,76 @@
 			(project "Tempting"
 				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
 					(reference "#PWR0111")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 68.326 168.148 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a9ea49ff-0180-44ad-80d7-3e811629e149")
+		(property "Reference" "C116"
+			(at 71.374 166.8779 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "22u"
+			(at 71.374 169.4179 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 69.2912 171.958 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 68.326 168.148 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 68.326 168.148 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7a67901f-d6ec-4ab2-a887-32c0b5708135")
+		)
+		(pin "2"
+			(uuid "d1dbcff2-ed7a-44f7-85ab-5e25f7fde89d")
+		)
+		(instances
+			(project "Tempting"
+				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
+					(reference "C116")
 					(unit 1)
 				)
 			)
@@ -9620,6 +10202,209 @@
 			(project "Tempting"
 				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
 					(reference "C102")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Regulator_Linear:AMS1117-3.3")
+		(at 52.832 162.814 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f94459b7-13fc-4da4-a41f-4f7cfc04ae50")
+		(property "Reference" "U104"
+			(at 52.832 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AMS1117-3.3"
+			(at 52.832 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
+			(at 52.832 157.734 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.advanced-monolithic.com/pdf/ds1117.pdf"
+			(at 55.372 169.164 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "1A Low Dropout regulator, positive, 3.3V fixed output, SOT-223"
+			(at 52.832 162.814 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "1da4166f-d339-4eae-a645-d01eccc1e7bd")
+		)
+		(pin "1"
+			(uuid "0017a153-5a2e-4f00-bfd2-5236a1bef98f")
+		)
+		(pin "2"
+			(uuid "90c2f7eb-306d-4ff7-b128-930ffcb7969c")
+		)
+		(instances
+			(project ""
+				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
+					(reference "U104")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 37.592 174.752 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "fc79c575-b3c8-405d-b6ec-8c3f763008d0")
+		(property "Reference" "#PWR0123"
+			(at 37.592 181.102 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 37.592 180.086 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 37.592 174.752 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 37.592 174.752 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 37.592 174.752 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f04aa8e6-39f4-4657-bfb2-b0fb0c54216d")
+		)
+		(instances
+			(project "Tempting"
+				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
+					(reference "#PWR0123")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 52.832 174.498 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "fe8037da-3681-4e54-963a-df6e62c4552b")
+		(property "Reference" "#PWR0121"
+			(at 52.832 180.848 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 52.832 179.832 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 52.832 174.498 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 52.832 174.498 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 52.832 174.498 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ff85c125-19d3-47fe-b46e-220d973a7806")
+		)
+		(instances
+			(project "Tempting"
+				(path "/ab8ca498-9b4e-4601-9f1d-f64c320ae8c6"
+					(reference "#PWR0121")
 					(unit 1)
 				)
 			)
