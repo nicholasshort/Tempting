@@ -133,4 +133,15 @@
 		(remove_unused_layers no)
 		(uuid "63029c88-9a4f-4b0f-b5a3-7ae3f21432df")
 	)
+	(model "${KIPRJMOD}/Tempting_3D_Models/2-1825910-7-c-3d.stp"
+		(offset
+			(xyz 0 0 13)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 90)
+		)
+	)
 )
