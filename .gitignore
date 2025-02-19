@@ -19,36 +19,6 @@
 *.spice
 *.raw
 *.log
-
-# Gerber and fabrication outputs
-*.gbr
-*.drl
-*.gbl
-*.gbo
-*.gbp
-*.gbn
-*.gts
-*.gto
-*.gtp
-*.gtn
-*.gbs
-*.gko
-*.gm1
-*.map
-
-# Output files from KiCad
-*.pos
-*.rpt
-*.csv
-*.zip
-*.pdf
-*.step
-*.stp
-*.dxf
-*.bdr
-*.svg
-
-# KiCad user settings and temporary files
 *.kicad_wks
 *.kicad_prl
 *.history
