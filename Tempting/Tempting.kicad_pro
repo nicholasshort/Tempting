@@ -677,7 +677,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "",
+      "plot": "Manufacturing/Gerbers/",
       "pos_files": "Manufacturing/",
       "specctra_dsn": "",
       "step": "Tempting.step",
