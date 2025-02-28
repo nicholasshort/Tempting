@@ -10453,7 +10453,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Coaxial:U.FL_Hirose_U.FL-R-SMT-1_Vertical"
+		(property "Footprint" "Connector_Coaxial:SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount"
 			(at 39.37 96.774 0)
 			(effects
 				(font
@@ -10480,7 +10480,7 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB Part #" "C434812"
+		(property "JLCPCB Part #" "C5199907"
 			(at 39.37 96.774 0)
 			(effects
 				(font
