@@ -1,0 +1,6 @@
+../Core/Src/DPS368-Barometer.c:15:19:DPS368_ReadCoeffs	16	static
+../Core/Src/DPS368-Barometer.c:37:19:DPS368_Init	16	static
+../Core/Src/DPS368-Barometer.c:60:19:DPS368_GetTemperature	48	static
+../Core/Src/DPS368-Barometer.c:89:19:DPS368_GetPressure	56	static
+../Core/Src/DPS368-Barometer.c:125:19:DPS368_RegWrite	32	static
+../Core/Src/DPS368-Barometer.c:131:19:DPS368_RegRead	32	static
