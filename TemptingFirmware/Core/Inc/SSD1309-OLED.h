@@ -9,6 +9,7 @@
 #define INC_SSD1309_OLED_H_
 
 #include "main.h"
+#include "spi.h"
 
 #define SSD1309_SPI_HANDLE  hspi1
 

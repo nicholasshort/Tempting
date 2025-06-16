@@ -29,12 +29,13 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32wbxx_hal.h"
 
+#include "app_conf.h"
+#include "app_entry.h"
+#include "app_common.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdbool.h>
-#include "DPS368-Barometer.h"
-#include "SCD41-CO2Sensor.h"
-#include "SSD1309-OLED.h"
+#include "macros.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -60,9 +61,15 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define OLED_NRST_Pin GPIO_PIN_4
+#define OLED_NRST_GPIO_Port GPIOA
+#define OLED_NCS_Pin GPIO_PIN_6
+#define OLED_NCS_GPIO_Port GPIOA
+#define OLED_DC_Pin GPIO_PIN_8
+#define OLED_DC_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
-#define RETURN_IF_ERROR(x) do { HAL_StatusTypeDef _ret = (x); if (_ret != HAL_OK) return _ret; } while(0)
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

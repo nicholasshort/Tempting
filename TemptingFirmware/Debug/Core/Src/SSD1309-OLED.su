@@ -2,6 +2,6 @@
 ../Core/Src/SSD1309-OLED.c:23:19:SSD1309_SendCommand	24	static
 ../Core/Src/SSD1309-OLED.c:34:19:SSD1309_SendData	24	static
 ../Core/Src/SSD1309-OLED.c:46:19:SSD1309_Init	8	static
-../Core/Src/SSD1309-OLED.c:72:19:SSD1309_Clear	16	static
-../Core/Src/SSD1309-OLED.c:81:19:SSD1309_Update	16	static
-../Core/Src/SSD1309-OLED.c:98:19:SSD1309_DrawPixel	24	static
+../Core/Src/SSD1309-OLED.c:63:19:SSD1309_Clear	16	static
+../Core/Src/SSD1309-OLED.c:72:19:SSD1309_Update	16	static
+../Core/Src/SSD1309-OLED.c:89:19:SSD1309_DrawPixel	24	static

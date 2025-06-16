@@ -9,6 +9,7 @@
 #define INC_DPS368_BAROMETER_H_
 
 #include "main.h"
+#include "i2c.h"
 
 #define DPS368_I2C_HANDLE		hi2c1
 

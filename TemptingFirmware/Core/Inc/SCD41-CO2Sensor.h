@@ -9,6 +9,8 @@
 #define INC_SCD41_CO2SENSOR_H_
 
 #include "main.h"
+#include "i2c.h"
+#include "stdbool.h"
 
 #define SCD41_I2C_HANDLE		hi2c1
 

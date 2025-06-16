@@ -17,31 +17,28 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <RGB_LED.h>
 #include "main.h"
 #include "i2c.h"
+#include "ipcc.h"
 #include "memorymap.h"
 #include "rf.h"
+#include "rtc.h"
 #include "spi.h"
 #include "tim.h"
-#include "usb.h"
+#include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "DPS368-Barometer.h"
+#include "SCD41-CO2Sensor.h"
+#include "SSD1309-OLED.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef enum {
-    AIR_QUALITY_EXCELLENT,   // 400-500 ppm (Green)
-    AIR_QUALITY_GOOD,        // 500-800 ppm (Light Green)
-    AIR_QUALITY_FAIR,        // 800-1000 ppm (Yellow)
-    AIR_QUALITY_MEDIOCRE,    // 1000-1500 ppm (Orange)
-    AIR_QUALITY_BAD,         // 1500+ ppm (Red)
-    AIR_QUALITY_HEAVILY_CONTAMINATED, // 1900+ ppm (Dark Red)
-    AIR_QUALITY_VENTILATION_REQUIRED  // 1700+ ppm (Flashing Red)
-} AirQualityLevel;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -57,9 +54,7 @@ typedef enum {
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t led_rgb_intensity = 0;
-uint16_t co2_ppm = 0;
-AirQualityLevel current_air_quality = AIR_QUALITY_GOOD;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -71,90 +66,12 @@ void PeriphCommonClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-AirQualityLevel Get_Air_Quality(uint16_t co2_ppm) {
-    if (co2_ppm <= 500) return AIR_QUALITY_EXCELLENT;
-    else if (co2_ppm <= 800) return AIR_QUALITY_GOOD;
-    else if (co2_ppm <= 1000) return AIR_QUALITY_FAIR;
-    else if (co2_ppm <= 1500) return AIR_QUALITY_MEDIOCRE;
-    else if (co2_ppm <= 1900) return AIR_QUALITY_BAD;
-    else return AIR_QUALITY_HEAVILY_CONTAMINATED;
-}
-
-void LED_RGB_Init() {
-
-	htim2.Instance->CCR1 = 100;
-	htim2.Instance->CCR2 = 100;
-	htim2.Instance->CCR3 = 100;
-
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
-
-}
-
-void LED_RGB_Set_Intensity(uint8_t red, uint8_t green, uint8_t blue) {
-
-	htim2.Instance->CCR1 = 100 - red;
-	htim2.Instance->CCR2 = 100 - green;
-	htim2.Instance->CCR3 = 100 - blue;
-
-}
-
-void LED_RGB_Update_Colour() {
-
-	switch (current_air_quality) {
-		case AIR_QUALITY_EXCELLENT:
-			LED_RGB_Set_Intensity(0, (uint8_t)(0.10*led_rgb_intensity), 0); // Green
-			break;
-		case AIR_QUALITY_GOOD:
-			LED_RGB_Set_Intensity((uint8_t)(0.5*led_rgb_intensity), (uint8_t)(0.10*led_rgb_intensity), 0); // Light Green
-			break;
-		case AIR_QUALITY_FAIR:
-			LED_RGB_Set_Intensity(led_rgb_intensity, (uint8_t)(0.10*led_rgb_intensity), 0); // Yellow
-			break;
-		case AIR_QUALITY_MEDIOCRE:
-			LED_RGB_Set_Intensity(led_rgb_intensity, (uint8_t)(0.04*led_rgb_intensity), 0); // Orange
-			break;
-		case AIR_QUALITY_BAD:
-			LED_RGB_Set_Intensity(led_rgb_intensity, 0, 0); // Red
-			break;
-		case AIR_QUALITY_HEAVILY_CONTAMINATED:
-			LED_RGB_Set_Intensity(led_rgb_intensity, 0, 0); // Red
-			break;
-		case AIR_QUALITY_VENTILATION_REQUIRED:
-			LED_RGB_Set_Intensity(led_rgb_intensity, 0, 0); // Red
-			break;
-		default:
-			LED_RGB_Set_Intensity(0, 0, 0);
-			break;
-	}
-
-}
-
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-
-	// Colour Select Button
-	if (GPIO_Pin == GPIO_PIN_4) {
-
-		led_rgb_intensity += 25;
-
-		if (led_rgb_intensity > 100)
-			led_rgb_intensity = 0;
-
-	}
-
-	// Intensity Select Button
-	else if (GPIO_Pin == GPIO_PIN_5) {
-
-		if (led_rgb_intensity <= 0)
-				led_rgb_intensity = 125;
-
-		led_rgb_intensity -= 25;
-
-	}
-
-	LED_RGB_Update_Colour();
-
+int _write(int file, char *ptr, int len)
+{
+//    while (CDC_Transmit_FS((uint8_t *)ptr, len) == USBD_BUSY) {
+//        // Optional: delay or yield to avoid USB deadlock
+//    }
+    return len;
 }
 /* USER CODE END 0 */
 
@@ -173,6 +90,8 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+  /* Config code for STM32_WPAN (HSE Tuning must be done before system clock configuration) */
+  MX_APPE_Config();
 
   /* USER CODE BEGIN Init */
 
@@ -184,6 +103,9 @@ int main(void)
   /* Configure the peripherals common clocks */
   PeriphCommonClock_Config();
 
+  /* IPCC initialisation */
+  MX_IPCC_Init();
+
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -193,86 +115,26 @@ int main(void)
   MX_I2C1_Init();
   MX_SPI1_Init();
   MX_TIM2_Init();
-  MX_USB_PCD_Init();
+  MX_RTC_Init();
+  MX_USB_Device_Init();
   MX_RF_Init();
   /* USER CODE BEGIN 2 */
-  LED_RGB_Init();
+  RGB_LED_Init();
+  RGB_LED_Set_Intensity(RGB_LED_RED_MAX_INTENSITY,0,0);
 
-
-  HAL_StatusTypeDef ret;
-
-  ret = DPS368_Init();
-  if (ret != 0)
-  	  Error_Handler();
-
-  ret = SSD1309_Init();
-  if (ret != 0)
-	  Error_Handler();
-
-  ret = SCD41_StopPeriodicMeasurement();
-  if (ret != 0)
-	  Error_Handler();
-
-  ret = SCD41_StartPeriodicMeasurement();
-  if (ret != 0)
-	  Error_Handler();
-
-  ret = SSD1309_DrawPixel(64, 32, 1);
-  ret = SSD1309_DrawPixel(65, 32, 1);
-  ret = SSD1309_DrawPixel(64, 33, 1);
-  ret = SSD1309_DrawPixel(65, 33, 1);
-  if (ret != 0)
-   	  Error_Handler();
-
-  ret = SSD1309_Update();
-  if (ret != 0)
-  	  Error_Handler();
-
+  SSD1309_Init();
   /* USER CODE END 2 */
+
+  /* Init code for STM32_WPAN */
+  MX_APPE_Init();
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
-	  HAL_Delay(5000);
-
-	  float temp_dps368, pressure;
-
-	  ret = DPS368_GetTemperature(&temp_dps368);
-	  if (ret != 0)
-		Error_Handler();
-
-	  HAL_Delay(100);
-
-	  ret = DPS368_GetPressure(&pressure);
-	  if (ret != 0)
-	  	Error_Handler();
-
-	  HAL_Delay(100);
-
-	  uint32_t gotten_pressure;
-	  ret = SCD41_GetAmbientPressure(&gotten_pressure);
-	  if (ret != 0)
-		Error_Handler();
-
-	  HAL_Delay(100);
-
-	  ret = SCD41_SetAmbientPressure((uint32_t)pressure);
-	  if (ret != 0)
-		Error_Handler();
-
-	  HAL_Delay(100);
-
-	  float temp_scd41, rh;
-	  ret = SCD41_ReadMeasurement(&co2_ppm, &temp_scd41, &rh);
-	  if (ret != 0)
-	  	Error_Handler();
-
-	  current_air_quality = Get_Air_Quality(co2_ppm);
-
-	  LED_RGB_Update_Colour();
-
     /* USER CODE END WHILE */
+    MX_APPE_Process();
 
     /* USER CODE BEGIN 3 */
   }
@@ -300,8 +162,9 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSE
-                              |RCC_OSCILLATORTYPE_LSE|RCC_OSCILLATORTYPE_MSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI1
+                              |RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE
+                              |RCC_OSCILLATORTYPE_MSI;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
@@ -309,6 +172,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.MSICalibrationValue = RCC_MSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_6;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_MSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;

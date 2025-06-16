@@ -45,25 +45,16 @@ HAL_StatusTypeDef SSD1309_SendData(uint8_t data) {
 
 HAL_StatusTypeDef SSD1309_Init(void) {
 
-//	RETURN_IF_ERROR(SSD1309_Reset());
-//
-//    RETURN_IF_ERROR(SSD1309_SendCommand(0xAE)); // Display OFF
-//
-//    RETURN_IF_ERROR(SSD1309_SendCommand(0x20)); RETURN_IF_ERROR(SSD1309_SendCommand(0x00)); // Set memory addressing mode to horizontal
-//
-//    RETURN_IF_ERROR(SSD1309_Clear()); // Clear Buffer
-//    RETURN_IF_ERROR(SSD1309_Update()); // Update Screen
-//
-//    RETURN_IF_ERROR(SSD1309_SendCommand(0xAF));
+	RETURN_IF_ERROR(SSD1309_Reset());
 
-	SSD1309_Reset();
+    RETURN_IF_ERROR(SSD1309_SendCommand(0xAE)); // Display OFF
 
-	SSD1309_SendCommand(0xAE);        // Display OFF
-	SSD1309_SendCommand(0x81);        // Set contrast
-	SSD1309_SendCommand(0xFF);        // Max brightness
-	SSD1309_SendCommand(0xA5);        // Entire display ON (ignores GDDRAM)
-	SSD1309_SendCommand(0xAF);        // Display ON
+    RETURN_IF_ERROR(SSD1309_SendCommand(0x20)); RETURN_IF_ERROR(SSD1309_SendCommand(0x00)); // Set memory addressing mode to horizontal
 
+    RETURN_IF_ERROR(SSD1309_Clear()); // Clear Buffer
+    RETURN_IF_ERROR(SSD1309_Update()); // Update Screen
+
+    RETURN_IF_ERROR(SSD1309_SendCommand(0xAF));
 
     return HAL_OK;
 

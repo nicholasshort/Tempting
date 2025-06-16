@@ -133,5 +133,3 @@ HAL_StatusTypeDef DPS368_RegRead(uint8_t regAddr, uint8_t* regData) {
 	return HAL_I2C_Mem_Read(&DPS368_I2C_HANDLE, DPS368_I2C_ADDRESS, regAddr, I2C_MEMADD_SIZE_8BIT, regData, 1, HAL_MAX_DELAY);
 
 }
-
-

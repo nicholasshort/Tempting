@@ -5,5 +5,5 @@
 
 USER_OBJS :=
 
-LIBS :=
+LIBS := -l:stm32wb_zigbee_wb_lib.a
 

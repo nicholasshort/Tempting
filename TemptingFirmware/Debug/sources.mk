@@ -25,4 +25,17 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Drivers/STM32WBxx_HAL_Driver/Src \
+Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src \
+Middlewares/ST/STM32_USB_Device_Library/Core/Src \
+Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci \
+Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl \
+Middlewares/ST/STM32_WPAN/utilities \
+Middlewares/ST/STM32_WPAN/zigbee/core/src \
+Middlewares/ST/STM32_WPAN/zigbee/platform \
+STM32_WPAN/App \
+STM32_WPAN/Target \
+USB_Device/App \
+USB_Device/Target \
+Utilities/lpm/tiny_lpm \
+Utilities/sequencer \
 
