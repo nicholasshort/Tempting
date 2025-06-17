@@ -7,12 +7,50 @@
 
 #include "DPS368-Barometer.h"
 
+#define DPS368_I2C_ADDRESS 		(0x77 << 1)
+
+#define DPS368_REG_PSR_B2		0x00
+#define DPS368_REG_PSR_B1		0x01
+#define DPS368_REG_PSR_B0		0x02
+#define DPS368_REG_TMP_B2		0x03
+#define DPS368_REG_TMP_B1		0x04
+#define DPS368_REG_TMP_B0		0x05
+#define DPS368_REG_PRS_CFG		0x06
+#define DPS368_REG_TMP_CFG		0x07
+#define DPS368_REG_MEAS_CFG 	0x08
+#define DPS368_REG_CFG_REG		0x09
+#define DPS368_REG_INT_STS		0x0A
+#define DPS368_REG_FIFO_STS		0x0B
+#define DPS368_REG_RESET		0x0C
+#define DPS368_REG_PROD_REV_ID	0x0D
+#define DPS368_REG_COEF_START	0x10
+#define DPS368_REG_COEF_END		0x21
+#define DPS368_REG_COEF_SRCE	0x28
+
+#define DPS368_NUM_COEFFS 18
+
+static uint8_t DPS368_Calibration_Coeffs[DPS368_NUM_COEFFS];
+
 static float raw_scaled_pressure = 0.0f;
 static float raw_scaled_temp = 0.0f;
 
-uint8_t DPS368_Calibration_Coeffs[DPS368_NUM_COEFFS] = {0};
+static uint8_t DPS368_Calibration_Coeffs[DPS368_NUM_COEFFS] = {0};
 
-HAL_StatusTypeDef DPS368_ReadCoeffs() {
+
+
+static HAL_StatusTypeDef DPS368_RegWrite(uint8_t regAddr, uint8_t regData) {
+
+	return HAL_I2C_Mem_Write(&DPS368_I2C_HANDLE, DPS368_I2C_ADDRESS, regAddr, I2C_MEMADD_SIZE_8BIT, &regData, 1, HAL_MAX_DELAY);
+
+}
+
+static HAL_StatusTypeDef DPS368_RegRead(uint8_t regAddr, uint8_t* regData) {
+
+	return HAL_I2C_Mem_Read(&DPS368_I2C_HANDLE, DPS368_I2C_ADDRESS, regAddr, I2C_MEMADD_SIZE_8BIT, regData, 1, HAL_MAX_DELAY);
+
+}
+
+static HAL_StatusTypeDef DPS368_ReadCoeffs() {
 
 	HAL_Delay(100); // Wait for coefficients to be saved to registers on startup
 
@@ -118,18 +156,5 @@ HAL_StatusTypeDef DPS368_GetPressure(float* pressure) {
 	*pressure = c00 + raw_scaled_pressure*(c10 + raw_scaled_pressure*(c20 + raw_scaled_pressure*c30)) + raw_scaled_temp*c01 + raw_scaled_temp*raw_scaled_pressure*(c11*raw_scaled_pressure*c21);
 
 	return HAL_OK;
-
-}
-
-
-HAL_StatusTypeDef DPS368_RegWrite(uint8_t regAddr, uint8_t regData) {
-
-	return HAL_I2C_Mem_Write(&DPS368_I2C_HANDLE, DPS368_I2C_ADDRESS, regAddr, I2C_MEMADD_SIZE_8BIT, &regData, 1, HAL_MAX_DELAY);
-
-}
-
-HAL_StatusTypeDef DPS368_RegRead(uint8_t regAddr, uint8_t* regData) {
-
-	return HAL_I2C_Mem_Read(&DPS368_I2C_HANDLE, DPS368_I2C_ADDRESS, regAddr, I2C_MEMADD_SIZE_8BIT, regData, 1, HAL_MAX_DELAY);
 
 }

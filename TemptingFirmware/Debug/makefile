@@ -73,8 +73,8 @@ all: main-build
 main-build: TemptingFirmware.elf secondary-outputs
 
 # Tool invocations
-TemptingFirmware.elf TemptingFirmware.map: $(OBJS) $(USER_OBJS) /home/nick/Repos/STM32CubeIDE_Workspace/TemptingFirmware/STM32WB55CGUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "TemptingFirmware.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/nick/Repos/STM32CubeIDE_Workspace/TemptingFirmware/STM32WB55CGUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="TemptingFirmware.map" -Wl,--gc-sections -static -L../Middlewares/ST/STM32_WPAN/zigbee/lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+TemptingFirmware.elf TemptingFirmware.map: $(OBJS) $(USER_OBJS) /home/nick/Repos/Tempting/TemptingFirmware/STM32WB55CGUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "TemptingFirmware.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/nick/Repos/Tempting/TemptingFirmware/STM32WB55CGUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="TemptingFirmware.map" -Wl,--gc-sections -static -L../Middlewares/ST/STM32_WPAN/zigbee/lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -41,6 +41,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "RGB_LED.h"
+#include "DPS368-Barometer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -142,7 +143,6 @@ static uint8_t TS_ID1;
 void APP_ZIGBEE_Init(void)
 {
   SHCI_CmdStatus_t ZigbeeInitStatus;
-
   APP_DBG("APP_ZIGBEE_Init");
 
   /* Check the compatibility with the Coprocessor Wireless Firmware loaded */
@@ -704,16 +704,18 @@ static void APP_ZIGBEE_Sensor_Server_Init(void)
 
 static void APP_ZIGBEE_Update_Sensor_Data(void)
 {
-
-    int16_t fake_temp = 2200;    // 22.00 °C in 0.01°C resolution (Zigbee spec)
-    int16_t fake_press = 10125;  // 1012.5 hPa = 10125 deci-Pascal (as required by ZCL)
+	float temp = 0.0f, press = 0.0f;
+	DPS368_GetTemperature(&temp);
+	DPS368_GetPressure(&press);
+    int16_t temp_int = (int16_t)(temp*100);    // 22.00 °C in 0.01°C resolution (Zigbee spec)
+    int16_t press_int = (int16_t)(press/10);  // 1012.5 hPa = 10125 deci-Pascal (as required by ZCL)
 
     enum ZbStatusCodeT status;
 
     // Update temperature attribute
     status = ZbZclAttrIntegerWrite(zigbee_app_info.temperature_meas_server_1,
                                    ZCL_TEMP_MEAS_ATTR_MEAS_VAL,
-                                   fake_temp);
+                                   temp_int);
     if (status != ZB_STATUS_SUCCESS) {
         APP_DBG("Failed to update temperature attribute");
     }
@@ -721,7 +723,7 @@ static void APP_ZIGBEE_Update_Sensor_Data(void)
     // Update pressure attribute
     status = ZbZclAttrIntegerWrite(zigbee_app_info.pressure_meas_server_1,
                                    ZCL_PRESS_MEAS_ATTR_MEAS_VAL,
-                                   fake_press);
+                                   press_int);
     if (status != ZB_STATUS_SUCCESS) {
         APP_DBG("Failed to update pressure attribute");
     }

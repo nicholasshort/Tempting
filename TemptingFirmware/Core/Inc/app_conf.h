@@ -75,7 +75,7 @@
 /**
  * Enable/Disable USB interface
  */
-#define CFG_USB_INTERFACE_ENABLE    0
+#define CFG_USB_INTERFACE_ENABLE    1
 
 /******************************************************************************
  * IPCC interface
@@ -275,7 +275,7 @@ typedef enum
  * Configure Log level for Application
  ******************************************************************************/
 #define APPLI_CONFIG_LOG_LEVEL    LOG_LEVEL_INFO
-#define APPLI_PRINT_FILE_FUNC_LINE    0
+#define APPLI_PRINT_FILE_FUNC_LINE    1
 
 /* USER CODE BEGIN Defines */
 

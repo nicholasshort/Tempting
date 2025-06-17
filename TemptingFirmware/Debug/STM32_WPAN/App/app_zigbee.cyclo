@@ -1,4 +1,4 @@
-../STM32_WPAN/App/app_zigbee.c:142:6:APP_ZIGBEE_Init	1
+../STM32_WPAN/App/app_zigbee.c:143:6:APP_ZIGBEE_Init	1
 ../STM32_WPAN/App/app_zigbee.c:184:13:APP_ZIGBEE_StackLayersInit	1
 ../STM32_WPAN/App/app_zigbee.c:214:13:APP_ZIGBEE_ConfigEndpoints	1
 ../STM32_WPAN/App/app_zigbee.c:250:13:APP_ZIGBEE_NwkForm	5

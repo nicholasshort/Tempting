@@ -27,6 +27,7 @@
 #include "spi.h"
 #include "tim.h"
 #include "usb_device.h"
+#include "usbd_cdc_if.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -68,9 +69,10 @@ void PeriphCommonClock_Config(void);
 /* USER CODE BEGIN 0 */
 int _write(int file, char *ptr, int len)
 {
-//    while (CDC_Transmit_FS((uint8_t *)ptr, len) == USBD_BUSY) {
-//        // Optional: delay or yield to avoid USB deadlock
-//    }
+    while (CDC_Transmit_FS((uint8_t *)ptr, len) == USBD_BUSY) {
+    	HAL_Delay(1);
+        // Optional: delay or yield to avoid USB deadlock
+    }
     return len;
 }
 /* USER CODE END 0 */
@@ -122,6 +124,7 @@ int main(void)
   RGB_LED_Init();
   RGB_LED_Set_Intensity(RGB_LED_RED_MAX_INTENSITY,0,0);
 
+  DPS368_Init();
   SSD1309_Init();
   /* USER CODE END 2 */
 
@@ -135,7 +138,8 @@ int main(void)
   {
     /* USER CODE END WHILE */
     MX_APPE_Process();
-
+//	  printf("Hello World\r\n");
+//	  HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -214,6 +218,8 @@ void SystemClock_Config(void)
 void PeriphCommonClock_Config(void)
 {
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+
+  LL_HSEM_1StepLock( HSEM, 5 );
 
   /** Initializes the peripherals clock
   */

@@ -1,4 +1,4 @@
-../STM32_WPAN/App/app_zigbee.c:142:6:APP_ZIGBEE_Init	16	static
+../STM32_WPAN/App/app_zigbee.c:143:6:APP_ZIGBEE_Init	16	static
 ../STM32_WPAN/App/app_zigbee.c:184:13:APP_ZIGBEE_StackLayersInit	8	static
 ../STM32_WPAN/App/app_zigbee.c:214:13:APP_ZIGBEE_ConfigEndpoints	48	static
 ../STM32_WPAN/App/app_zigbee.c:250:13:APP_ZIGBEE_NwkForm	496	static
@@ -26,4 +26,4 @@
 ../STM32_WPAN/App/app_zigbee.c:667:13:APP_ZIGBEE_ProcessRequestM0ToM4	8	static
 ../STM32_WPAN/App/app_zigbee.c:684:13:APP_ZIGBEE_App_Init	8	static
 ../STM32_WPAN/App/app_zigbee.c:698:13:APP_ZIGBEE_Sensor_Server_Init	8	static
-../STM32_WPAN/App/app_zigbee.c:705:13:APP_ZIGBEE_Update_Sensor_Data	32	static
+../STM32_WPAN/App/app_zigbee.c:705:13:APP_ZIGBEE_Update_Sensor_Data	40	static
