@@ -68,7 +68,7 @@
 /* USER CODE END Temperature_meas (endpoint 1) defines */
 
 /* USER CODE BEGIN PD */
-#define HW_TS_SERVER_1S_NB_TICKS                    (1*1000*1000/CFG_TS_TICK_VAL) /* 1s */
+#define HW_TS_SERVER_30S_NB_TICKS                    (30*1000*1000/CFG_TS_TICK_VAL) /* 30s */
 /* USER CODE END PD */
 
 /* Private macros ------------------------------------------------------------*/
@@ -240,6 +240,19 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   ZbZclClusterEndpointRegister(zigbee_app_info.temperature_meas_server_1);
 
   /* USER CODE BEGIN CONFIG_ENDPOINT */
+
+	ZbZclAttrReportConfigDefault(zigbee_app_info.temperature_meas_server_1,
+								 ZCL_TEMP_MEAS_ATTR_MEAS_VAL,
+								 5,    // min interval (s)
+								 300,  // max interval (s)
+								 NULL);
+
+	ZbZclAttrReportConfigDefault(zigbee_app_info.pressure_meas_server_1,
+								 ZCL_PRESS_MEAS_ATTR_MEAS_VAL,
+								 5,    // min interval (s)
+								 300,  // max interval (s)
+								 NULL);
+
   /* USER CODE END CONFIG_ENDPOINT */
 }
 
@@ -699,7 +712,7 @@ static void APP_ZIGBEE_App_Init(void)
 static void APP_ZIGBEE_Sensor_Server_Init(void)
 {
   /* Start the timer */
-  HW_TS_Start(TS_ID1, (HW_TS_SERVER_1S_NB_TICKS));
+  HW_TS_Start(TS_ID1, (HW_TS_SERVER_30S_NB_TICKS));
 }
 
 
