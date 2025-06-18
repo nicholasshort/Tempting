@@ -143,6 +143,7 @@ static uint8_t TS_ID1;
 void APP_ZIGBEE_Init(void)
 {
   SHCI_CmdStatus_t ZigbeeInitStatus;
+
   APP_DBG("APP_ZIGBEE_Init");
 
   /* Check the compatibility with the Coprocessor Wireless Firmware loaded */
@@ -711,6 +712,8 @@ static void APP_ZIGBEE_Update_Sensor_Data(void)
     int16_t press_int = (int16_t)(press/10);  // 1012.5 hPa = 10125 deci-Pascal (as required by ZCL)
 
     enum ZbStatusCodeT status;
+
+    APP_DBG("Updating pressure and temperature attributes: %dC, %dhPa", temp_int, press_int);
 
     // Update temperature attribute
     status = ZbZclAttrIntegerWrite(zigbee_app_info.temperature_meas_server_1,

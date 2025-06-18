@@ -52,7 +52,7 @@ static HAL_StatusTypeDef DPS368_RegRead(uint8_t regAddr, uint8_t* regData) {
 
 static HAL_StatusTypeDef DPS368_ReadCoeffs() {
 
-	HAL_Delay(100); // Wait for coefficients to be saved to registers on startup
+//	HAL_Delay(100); // Wait for coefficients to be saved to registers on startup
 
 	HAL_StatusTypeDef i2c_status;
 
@@ -99,7 +99,7 @@ HAL_StatusTypeDef DPS368_GetTemperature(float* temp) {
 
 	RETURN_IF_ERROR(DPS368_RegWrite(DPS368_REG_MEAS_CFG, 0x02)); // Set command mode for temp measurement
 
-	HAL_Delay(100);
+//	HAL_Delay(100);
 
 	uint8_t temp_msb, temp_lsb, temp_xlsb;
 	RETURN_IF_ERROR(DPS368_RegRead(DPS368_REG_TMP_B2, &temp_msb));
@@ -128,7 +128,7 @@ HAL_StatusTypeDef DPS368_GetPressure(float* pressure) {
 
 	RETURN_IF_ERROR(DPS368_RegWrite(DPS368_REG_MEAS_CFG, 0x01)); // Set command mode for pressure measurement
 
-	HAL_Delay(100);
+//	HAL_Delay(100);
 
 	uint8_t pressure_msb, pressure_lsb, pressure_xlsb;
 	RETURN_IF_ERROR(DPS368_RegRead(DPS368_REG_PSR_B2, &pressure_msb));

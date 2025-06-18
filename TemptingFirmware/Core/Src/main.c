@@ -17,7 +17,6 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <RGB_LED.h>
 #include "main.h"
 #include "i2c.h"
 #include "ipcc.h"
@@ -27,7 +26,6 @@
 #include "spi.h"
 #include "tim.h"
 #include "usb_device.h"
-#include "usbd_cdc_if.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -35,6 +33,8 @@
 #include "DPS368-Barometer.h"
 #include "SCD41-CO2Sensor.h"
 #include "SSD1309-OLED.h"
+#include "RGB_LED.h"
+#include "usbd_cdc_if.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -70,7 +70,6 @@ void PeriphCommonClock_Config(void);
 int _write(int file, char *ptr, int len)
 {
     while (CDC_Transmit_FS((uint8_t *)ptr, len) == USBD_BUSY) {
-    	HAL_Delay(1);
         // Optional: delay or yield to avoid USB deadlock
     }
     return len;
@@ -138,8 +137,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
     MX_APPE_Process();
-//	  printf("Hello World\r\n");
-//	  HAL_Delay(1000);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -166,9 +164,8 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI1
-                              |RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE
-                              |RCC_OSCILLATORTYPE_MSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSE
+                              |RCC_OSCILLATORTYPE_LSE|RCC_OSCILLATORTYPE_MSI;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
@@ -176,7 +173,6 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.MSICalibrationValue = RCC_MSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_6;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_MSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;

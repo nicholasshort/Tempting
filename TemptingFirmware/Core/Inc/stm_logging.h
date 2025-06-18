@@ -41,7 +41,9 @@
     {                                                                                       \
         printf("\r\n[%s][%s][%d] ", DbgTraceGetFileName(__FILE__),__FUNCTION__,__LINE__);   \
     }                                                                                       \
-    logApplication(LOG_LEVEL_NONE, APPLI_LOG_REGION_GENERAL, __VA_ARGS__);                  \
+    printf(__VA_ARGS__);																	\
+    printf("\r\n");																			\
+	logApplication(LOG_LEVEL_NONE, APPLI_LOG_REGION_GENERAL, __VA_ARGS__);                  \
   }
 /**
  * This enumeration represents log regions.
