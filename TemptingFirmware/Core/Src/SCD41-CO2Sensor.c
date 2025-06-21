@@ -7,6 +7,8 @@
 
 #include "SCD41-CO2Sensor.h"
 
+#define SCD41_I2C_ADDRESS 		(0x62 << 1)
+
 static HAL_StatusTypeDef SCD41_VerifyCheckSum(uint8_t read_msb, uint8_t read_lsb, uint8_t crc) {
 
     uint8_t data[2] = {read_msb, read_lsb};
@@ -45,6 +47,66 @@ static HAL_StatusTypeDef SCD41_GenerateCheckSum(uint8_t write_msb, uint8_t write
     return HAL_OK;
 
 }
+
+// Command Sequence Functions
+static HAL_StatusTypeDef SCD41_SendSequence(uint16_t hexCommand) {
+
+	uint8_t hexCommandBytes[2];
+	hexCommandBytes[0] = (uint8_t)(hexCommand >> 8);
+	hexCommandBytes[1] = (uint8_t)hexCommand;
+
+	RETURN_IF_ERROR(HAL_I2C_Master_Transmit(&SCD41_I2C_HANDLE, SCD41_I2C_ADDRESS, hexCommandBytes, 2, HAL_MAX_DELAY));
+
+	return HAL_OK;
+
+}
+
+static HAL_StatusTypeDef SCD41_ReadSequence(uint16_t hexCommand, uint16_t* readData, uint8_t numReadFrames, uint16_t waitTime) {
+
+	uint8_t hexCommandBytes[2];
+	hexCommandBytes[0] = (uint8_t)(hexCommand >> 8);
+	hexCommandBytes[1] = (uint8_t)hexCommand;
+
+	RETURN_IF_ERROR(HAL_I2C_Master_Transmit(&SCD41_I2C_HANDLE, SCD41_I2C_ADDRESS, hexCommandBytes, 2, HAL_MAX_DELAY));
+
+//	if (waitTime > 0)
+//		HAL_Delay(waitTime);
+
+	for (uint8_t i = 0; i < numReadFrames; i++) {
+		uint8_t readBuff[3];
+		RETURN_IF_ERROR(HAL_I2C_Master_Receive(&SCD41_I2C_HANDLE, SCD41_I2C_ADDRESS, readBuff, 3, HAL_MAX_DELAY));
+
+		RETURN_IF_ERROR(SCD41_VerifyCheckSum(readBuff[0], readBuff[1], readBuff[2]));
+
+		readData[i] = readBuff[0] << 8 | readBuff[1];
+
+	}
+
+
+	return HAL_OK;
+
+}
+
+static HAL_StatusTypeDef SCD41_WriteSequence(uint16_t hexCommand, uint16_t writeData) {
+
+	uint8_t writeDataBytes[3];
+	writeDataBytes[0] = (uint8_t)(writeData >> 8);
+	writeDataBytes[1] = (uint8_t)writeData;
+
+	SCD41_GenerateCheckSum(writeDataBytes[0], writeDataBytes[1], &writeDataBytes[2]);
+
+	RETURN_IF_ERROR(HAL_I2C_Mem_Write(&SCD41_I2C_HANDLE, SCD41_I2C_ADDRESS, hexCommand, I2C_MEMADD_SIZE_16BIT, writeDataBytes, 3, HAL_MAX_DELAY));
+
+	return HAL_OK;
+
+}
+
+//static HAL_StatusTypeDef SCD41_SendFetchSequence(uint16_t hexCommand, uint16_t writeData, uint16_t* readData, uint16_t waitTime) {
+//
+//	return HAL_OK;
+//
+//}
+
 
 HAL_StatusTypeDef SCD41_GetSensorVariant(uint16_t* variantCode) {
 
@@ -124,66 +186,6 @@ HAL_StatusTypeDef SCD41_GetDataReadyStatus(bool* dataReady) {
 	RETURN_IF_ERROR(SCD41_ReadSequence(0xE4B8, &readData, 1, 1));
 
 	*dataReady = ((readData & 0x07FF) != 0);
-
-	return HAL_OK;
-
-}
-
-
-// Command Sequence Functions
-HAL_StatusTypeDef SCD41_SendSequence(uint16_t hexCommand) {
-
-	uint8_t hexCommandBytes[2];
-	hexCommandBytes[0] = (uint8_t)(hexCommand >> 8);
-	hexCommandBytes[1] = (uint8_t)hexCommand;
-
-	RETURN_IF_ERROR(HAL_I2C_Master_Transmit(&SCD41_I2C_HANDLE, SCD41_I2C_ADDRESS, hexCommandBytes, 2, HAL_MAX_DELAY));
-
-	return HAL_OK;
-
-}
-
-HAL_StatusTypeDef SCD41_ReadSequence(uint16_t hexCommand, uint16_t* readData, uint8_t numReadFrames, uint16_t waitTime) {
-
-	uint8_t hexCommandBytes[2];
-	hexCommandBytes[0] = (uint8_t)(hexCommand >> 8);
-	hexCommandBytes[1] = (uint8_t)hexCommand;
-
-	RETURN_IF_ERROR(HAL_I2C_Master_Transmit(&SCD41_I2C_HANDLE, SCD41_I2C_ADDRESS, hexCommandBytes, 2, HAL_MAX_DELAY));
-
-	if (waitTime > 0)
-		HAL_Delay(waitTime);
-
-	for (uint8_t i = 0; i < numReadFrames; i++) {
-		uint8_t readBuff[3];
-		RETURN_IF_ERROR(HAL_I2C_Master_Receive(&SCD41_I2C_HANDLE, SCD41_I2C_ADDRESS, readBuff, 3, HAL_MAX_DELAY));
-
-		RETURN_IF_ERROR(SCD41_VerifyCheckSum(readBuff[0], readBuff[1], readBuff[2]));
-
-		readData[i] = readBuff[0] << 8 | readBuff[1];
-
-	}
-
-
-	return HAL_OK;
-
-}
-
-HAL_StatusTypeDef SCD41_WriteSequence(uint16_t hexCommand, uint16_t writeData) {
-
-	uint8_t writeDataBytes[3];
-	writeDataBytes[0] = (uint8_t)(writeData >> 8);
-	writeDataBytes[1] = (uint8_t)writeData;
-
-	SCD41_GenerateCheckSum(writeDataBytes[0], writeDataBytes[1], &writeDataBytes[2]);
-
-	RETURN_IF_ERROR(HAL_I2C_Mem_Write(&SCD41_I2C_HANDLE, SCD41_I2C_ADDRESS, hexCommand, I2C_MEMADD_SIZE_16BIT, writeDataBytes, 3, HAL_MAX_DELAY));
-
-	return HAL_OK;
-
-}
-
-HAL_StatusTypeDef SCD41_SendFetchSequence(uint16_t hexCommand, uint16_t writeData, uint16_t* readData, uint16_t waitTime) {
 
 	return HAL_OK;
 

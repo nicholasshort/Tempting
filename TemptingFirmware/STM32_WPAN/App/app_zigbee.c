@@ -40,8 +40,10 @@
 #include "zcl/general/zcl.temp.meas.h"
 
 /* USER CODE BEGIN Includes */
+#include "zcl.co2.meas.h"
 #include "RGB_LED.h"
 #include "DPS368-Barometer.h"
+#include "SCD41-CO2Sensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,6 +67,9 @@
 #define TEMP_MAX_1                      32767
 #define TEMP_TOLERANCE_1                      2048
 /* USER CODE BEGIN Temperature_meas (endpoint 1) defines */
+#define CO2_MIN_1						0.0f
+#define CO2_MAX_1						1.0f
+#define CO2_TOLERANCE_1					0.0f
 /* USER CODE END Temperature_meas (endpoint 1) defines */
 
 /* USER CODE BEGIN PD */
@@ -127,6 +132,7 @@ struct zigbee_app_info
   struct ZbZclClusterT *identify_server_1;
   struct ZbZclClusterT *pressure_meas_server_1;
   struct ZbZclClusterT *temperature_meas_server_1;
+  struct ZbZclClusterT *co2_meas_server_1;
 };
 static struct zigbee_app_info zigbee_app_info;
 
@@ -239,6 +245,10 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
   assert(zigbee_app_info.temperature_meas_server_1 != NULL);
   ZbZclClusterEndpointRegister(zigbee_app_info.temperature_meas_server_1);
 
+  zigbee_app_info.co2_meas_server_1 = ZbZclCo2MeasServerAlloc(zigbee_app_info.zb, SW1_ENDPOINT, CO2_MIN_1, CO2_MAX_1, CO2_TOLERANCE_1);
+  assert(zigbee_app_info.co2_meas_server_1 != NULL);
+  ZbZclClusterEndpointRegister(zigbee_app_info.co2_meas_server_1);
+
   /* USER CODE BEGIN CONFIG_ENDPOINT */
 
 	ZbZclAttrReportConfigDefault(zigbee_app_info.temperature_meas_server_1,
@@ -253,6 +263,11 @@ static void APP_ZIGBEE_ConfigEndpoints(void)
 								 300,  // max interval (s)
 								 NULL);
 
+	ZbZclAttrReportConfigDefault(zigbee_app_info.co2_meas_server_1,
+								 ZCL_CO2_MEAS_ATTR_MEAS_VAL,
+								 5,    // min interval (s)
+								 300,  // max interval (s)
+								 NULL);
   /* USER CODE END CONFIG_ENDPOINT */
 }
 
@@ -718,30 +733,68 @@ static void APP_ZIGBEE_Sensor_Server_Init(void)
 
 static void APP_ZIGBEE_Update_Sensor_Data(void)
 {
-	float temp = 0.0f, press = 0.0f;
-	DPS368_GetTemperature(&temp);
-	DPS368_GetPressure(&press);
-    int16_t temp_int = (int16_t)(temp*100);    // 22.00 °C in 0.01°C resolution (Zigbee spec)
-    int16_t press_int = (int16_t)(press/10);  // 1012.5 hPa = 10125 deci-Pascal (as required by ZCL)
+    float temp = 0.0f, press = 0.0f;
+    uint16_t co2_ppm;
 
-    enum ZbStatusCodeT status;
+    // Get sensor data
+    DPS368_GetPressure(&press);
+    SCD41_SetAmbientPressure((int32_t)press);
+    DPS368_GetTemperature(&temp);
+    SCD41_ReadMeasurement(&co2_ppm, NULL, NULL);
 
-    APP_DBG("Updating pressure and temperature attributes: %dC, %dhPa", temp_int, press_int);
+    int16_t temp_attr_val = (int16_t)(temp * 100);      // Temperature in 0.01 °C resolution
+    int16_t press_attr_val = (int16_t)(press / 10);     // Pressure in deciPascal
+    float co2_attr_val = co2_ppm / 1e6f;            // Normalize to 0.0 - 1.0 range
+
+    enum ZclStatusCodeT status;
+
+    APP_DBG("Updating sensor data: %dC, %dhPa, %dppm", temp_attr_val, press_attr_val, co2_ppm);
 
     // Update temperature attribute
     status = ZbZclAttrIntegerWrite(zigbee_app_info.temperature_meas_server_1,
                                    ZCL_TEMP_MEAS_ATTR_MEAS_VAL,
-                                   temp_int);
-    if (status != ZB_STATUS_SUCCESS) {
+                                   temp_attr_val);
+    if (status != ZCL_STATUS_SUCCESS) {
         APP_DBG("Failed to update temperature attribute");
     }
 
     // Update pressure attribute
     status = ZbZclAttrIntegerWrite(zigbee_app_info.pressure_meas_server_1,
                                    ZCL_PRESS_MEAS_ATTR_MEAS_VAL,
-                                   press_int);
-    if (status != ZB_STATUS_SUCCESS) {
+                                   press_attr_val);
+    if (status != ZCL_STATUS_SUCCESS) {
         APP_DBG("Failed to update pressure attribute");
     }
+
+
+    /* Update CO2 attribute (custom cluster using float) */
+    uint8_t co2_buf[32];  // enough for a 32-bit IEEE float
+    float num = 0.5f;
+    int len = ZbZclAppendFloat(num, ZCL_DATATYPE_FLOATING_SINGLE, co2_buf, sizeof(co2_buf));
+    if (len <= 0) {
+        APP_DBG("Failed to encode CO2 float value");
+    } else {
+        status = ZbZclAttrWrite(zigbee_app_info.co2_meas_server_1,
+                                NULL, // local write
+                                ZCL_CO2_MEAS_ATTR_MEAS_VAL,
+                                co2_buf,
+                                len,
+								ZCL_ATTR_WRITE_FLAG_FORCE);
+        if (status != ZCL_STATUS_SUCCESS) {
+            APP_DBG("Failed to update CO2 attribute");
+        }
+
+        // Read back new CO2 value from attribute
+
+
+
+
+
+    }
+
+
+
 }
+
+
 /* USER CODE END FD_LOCAL_FUNCTIONS */

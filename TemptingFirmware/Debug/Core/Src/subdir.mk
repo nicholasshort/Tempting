@@ -26,7 +26,8 @@ C_SRCS += \
 ../Core/Src/syscalls.c \
 ../Core/Src/sysmem.c \
 ../Core/Src/system_stm32wbxx.c \
-../Core/Src/tim.c 
+../Core/Src/tim.c \
+../Core/Src/z.co2.meas.c 
 
 OBJS += \
 ./Core/Src/DPS368-Barometer.o \
@@ -50,7 +51,8 @@ OBJS += \
 ./Core/Src/syscalls.o \
 ./Core/Src/sysmem.o \
 ./Core/Src/system_stm32wbxx.o \
-./Core/Src/tim.o 
+./Core/Src/tim.o \
+./Core/Src/z.co2.meas.o 
 
 C_DEPS += \
 ./Core/Src/DPS368-Barometer.d \
@@ -74,7 +76,8 @@ C_DEPS += \
 ./Core/Src/syscalls.d \
 ./Core/Src/sysmem.d \
 ./Core/Src/system_stm32wbxx.d \
-./Core/Src/tim.d 
+./Core/Src/tim.d \
+./Core/Src/z.co2.meas.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -84,7 +87,7 @@ Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/DPS368-Barometer.cyclo ./Core/Src/DPS368-Barometer.d ./Core/Src/DPS368-Barometer.o ./Core/Src/DPS368-Barometer.su ./Core/Src/RGB_LED.cyclo ./Core/Src/RGB_LED.d ./Core/Src/RGB_LED.o ./Core/Src/RGB_LED.su ./Core/Src/SCD41-CO2Sensor.cyclo ./Core/Src/SCD41-CO2Sensor.d ./Core/Src/SCD41-CO2Sensor.o ./Core/Src/SCD41-CO2Sensor.su ./Core/Src/SSD1309-OLED.cyclo ./Core/Src/SSD1309-OLED.d ./Core/Src/SSD1309-OLED.o ./Core/Src/SSD1309-OLED.su ./Core/Src/app_entry.cyclo ./Core/Src/app_entry.d ./Core/Src/app_entry.o ./Core/Src/app_entry.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/hw_timerserver.cyclo ./Core/Src/hw_timerserver.d ./Core/Src/hw_timerserver.o ./Core/Src/hw_timerserver.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/ipcc.cyclo ./Core/Src/ipcc.d ./Core/Src/ipcc.o ./Core/Src/ipcc.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/memorymap.cyclo ./Core/Src/memorymap.d ./Core/Src/memorymap.o ./Core/Src/memorymap.su ./Core/Src/rf.cyclo ./Core/Src/rf.d ./Core/Src/rf.o ./Core/Src/rf.su ./Core/Src/rtc.cyclo ./Core/Src/rtc.d ./Core/Src/rtc.o ./Core/Src/rtc.su ./Core/Src/spi.cyclo ./Core/Src/spi.d ./Core/Src/spi.o ./Core/Src/spi.su ./Core/Src/stm32_lpm_if.cyclo ./Core/Src/stm32_lpm_if.d ./Core/Src/stm32_lpm_if.o ./Core/Src/stm32_lpm_if.su ./Core/Src/stm32wbxx_hal_msp.cyclo ./Core/Src/stm32wbxx_hal_msp.d ./Core/Src/stm32wbxx_hal_msp.o ./Core/Src/stm32wbxx_hal_msp.su ./Core/Src/stm32wbxx_it.cyclo ./Core/Src/stm32wbxx_it.d ./Core/Src/stm32wbxx_it.o ./Core/Src/stm32wbxx_it.su ./Core/Src/stm_logging.cyclo ./Core/Src/stm_logging.d ./Core/Src/stm_logging.o ./Core/Src/stm_logging.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32wbxx.cyclo ./Core/Src/system_stm32wbxx.d ./Core/Src/system_stm32wbxx.o ./Core/Src/system_stm32wbxx.su ./Core/Src/tim.cyclo ./Core/Src/tim.d ./Core/Src/tim.o ./Core/Src/tim.su
+	-$(RM) ./Core/Src/DPS368-Barometer.cyclo ./Core/Src/DPS368-Barometer.d ./Core/Src/DPS368-Barometer.o ./Core/Src/DPS368-Barometer.su ./Core/Src/RGB_LED.cyclo ./Core/Src/RGB_LED.d ./Core/Src/RGB_LED.o ./Core/Src/RGB_LED.su ./Core/Src/SCD41-CO2Sensor.cyclo ./Core/Src/SCD41-CO2Sensor.d ./Core/Src/SCD41-CO2Sensor.o ./Core/Src/SCD41-CO2Sensor.su ./Core/Src/SSD1309-OLED.cyclo ./Core/Src/SSD1309-OLED.d ./Core/Src/SSD1309-OLED.o ./Core/Src/SSD1309-OLED.su ./Core/Src/app_entry.cyclo ./Core/Src/app_entry.d ./Core/Src/app_entry.o ./Core/Src/app_entry.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/hw_timerserver.cyclo ./Core/Src/hw_timerserver.d ./Core/Src/hw_timerserver.o ./Core/Src/hw_timerserver.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/ipcc.cyclo ./Core/Src/ipcc.d ./Core/Src/ipcc.o ./Core/Src/ipcc.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/memorymap.cyclo ./Core/Src/memorymap.d ./Core/Src/memorymap.o ./Core/Src/memorymap.su ./Core/Src/rf.cyclo ./Core/Src/rf.d ./Core/Src/rf.o ./Core/Src/rf.su ./Core/Src/rtc.cyclo ./Core/Src/rtc.d ./Core/Src/rtc.o ./Core/Src/rtc.su ./Core/Src/spi.cyclo ./Core/Src/spi.d ./Core/Src/spi.o ./Core/Src/spi.su ./Core/Src/stm32_lpm_if.cyclo ./Core/Src/stm32_lpm_if.d ./Core/Src/stm32_lpm_if.o ./Core/Src/stm32_lpm_if.su ./Core/Src/stm32wbxx_hal_msp.cyclo ./Core/Src/stm32wbxx_hal_msp.d ./Core/Src/stm32wbxx_hal_msp.o ./Core/Src/stm32wbxx_hal_msp.su ./Core/Src/stm32wbxx_it.cyclo ./Core/Src/stm32wbxx_it.d ./Core/Src/stm32wbxx_it.o ./Core/Src/stm32wbxx_it.su ./Core/Src/stm_logging.cyclo ./Core/Src/stm_logging.d ./Core/Src/stm_logging.o ./Core/Src/stm_logging.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32wbxx.cyclo ./Core/Src/system_stm32wbxx.d ./Core/Src/system_stm32wbxx.o ./Core/Src/system_stm32wbxx.su ./Core/Src/tim.cyclo ./Core/Src/tim.d ./Core/Src/tim.o ./Core/Src/tim.su ./Core/Src/z.co2.meas.cyclo ./Core/Src/z.co2.meas.d ./Core/Src/z.co2.meas.o ./Core/Src/z.co2.meas.su
 
 .PHONY: clean-Core-2f-Src
 

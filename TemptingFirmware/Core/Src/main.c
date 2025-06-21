@@ -125,6 +125,8 @@ int main(void)
 
   DPS368_Init();
   SSD1309_Init();
+  SCD41_StopPeriodicMeasurement();
+  SCD41_StartPeriodicMeasurement();
   /* USER CODE END 2 */
 
   /* Init code for STM32_WPAN */

@@ -95,9 +95,10 @@ STM32_WPAN/App/app_zigbee.o: ../STM32_WPAN/App/app_zigbee.c \
  ../Middlewares/ST/STM32_WPAN/zigbee/stack/include/zcl/general/zcl.identify.h \
  ../Middlewares/ST/STM32_WPAN/zigbee/stack/include/zcl/general/zcl.press.meas.h \
  ../Middlewares/ST/STM32_WPAN/zigbee/stack/include/zcl/general/zcl.temp.meas.h \
- ../Core/Inc/RGB_LED.h ../Core/Inc/main.h ../Core/Inc/app_entry.h \
- ../Core/Inc/app_common.h ../Core/Inc/macros.h ../Core/Inc/tim.h \
- ../Core/Inc/DPS368-Barometer.h ../Core/Inc/i2c.h
+ ../Core/Inc/zcl.co2.meas.h ../Core/Inc/RGB_LED.h ../Core/Inc/main.h \
+ ../Core/Inc/app_entry.h ../Core/Inc/app_common.h ../Core/Inc/macros.h \
+ ../Core/Inc/tim.h ../Core/Inc/DPS368-Barometer.h ../Core/Inc/i2c.h \
+ ../Core/Inc/SCD41-CO2Sensor.h
 ../Core/Inc/app_common.h:
 ../Core/Inc/app_conf.h:
 ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/hw.h:
@@ -197,6 +198,7 @@ STM32_WPAN/App/app_zigbee.o: ../STM32_WPAN/App/app_zigbee.c \
 ../Middlewares/ST/STM32_WPAN/zigbee/stack/include/zcl/general/zcl.identify.h:
 ../Middlewares/ST/STM32_WPAN/zigbee/stack/include/zcl/general/zcl.press.meas.h:
 ../Middlewares/ST/STM32_WPAN/zigbee/stack/include/zcl/general/zcl.temp.meas.h:
+../Core/Inc/zcl.co2.meas.h:
 ../Core/Inc/RGB_LED.h:
 ../Core/Inc/main.h:
 ../Core/Inc/app_entry.h:
@@ -205,3 +207,4 @@ STM32_WPAN/App/app_zigbee.o: ../STM32_WPAN/App/app_zigbee.c \
 ../Core/Inc/tim.h:
 ../Core/Inc/DPS368-Barometer.h:
 ../Core/Inc/i2c.h:
+../Core/Inc/SCD41-CO2Sensor.h:
